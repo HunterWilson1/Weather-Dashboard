@@ -3,6 +3,9 @@ let citySearch = document.querySelector('#citySearch');
 let cityName = document.querySelector('#city');
 let temp = document.querySelector('#temp')
 let humidity = document.querySelector('#humidity');
+let windSpeed = document.querySelector('#wind-spd')
+let weatherIcon = document.querySelector('#weather')
+
 
 function start() {
 
@@ -10,16 +13,18 @@ const APIKey = "59e0d5247e1028ae9dbf1071b7d55e24"
 
     function currentWeather (city) {
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
-
+    let iconURL = "http://openweathermap.org/img/w/" + + ".png"
         fetch(queryURL)
             .then((Response) => Response.json())
             .then((data) => {
            
             console.log(data),
             
+        
             cityName.innerText = citySearch.value
             temp.innerText = "Temp: " + data.main.temp
             humidity.innerText = "Humidity: " + data.main.humidity
+            windSpeed.innerText = "Wind Speed: " + data.wind.speed
             }
             );
 
