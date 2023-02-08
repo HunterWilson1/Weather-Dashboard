@@ -52,11 +52,14 @@ function start() {
 
           var h2 = document.createElement("h2");
           var p = document.createElement("p");
+          var img = document.createElement("img");
 
           forecastContainer.classList =
-            "col-md-2 forecast bg-primary text-white m-2 rounded";
+            "row col-md-2 forecast bg-primary text-white m-2 rounded";
 
           h2.innerText = data.city.name;
+
+          img.src = "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
 
           p.innerText =
             "Temp: " +
@@ -67,11 +70,13 @@ function start() {
             "\n" +
             "Wind Speed: " +
             data.list[i].wind.speed;
+          
+          img.classList = "card-body text-center";
           h2.classList = "card-body text-center";
           p.classList = "card-body text-center";
 
           forecastContainer.appendChild(h2);
-
+          forecastContainer.appendChild(img);
           forecastContainer.appendChild(p);
         }
       });
