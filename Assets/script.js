@@ -25,7 +25,7 @@ function start() {
       .then((data) => {
         console.log(data);
 
-        cityName.innerText = citySearch.value;
+        cityName.innerText = city;
         weatherIcon.setAttribute(
           "src",
           "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
@@ -78,6 +78,8 @@ function start() {
           forecastContainer.appendChild(h2);
           forecastContainer.appendChild(img);
           forecastContainer.appendChild(p);
+       
+       
         }
       });
   }
@@ -92,7 +94,7 @@ function start() {
     searchHistory.push(search);
     localStorage.setItem("search", JSON.stringify(searchHistory));
     //calling the functions
-    currentWeather(search);
+   // currentWeather(search);
     getFiveDayForecast(search);
     renderSearchHistory();
   });
@@ -122,6 +124,7 @@ function start() {
     }
   }
 
+  
 
 }
 
