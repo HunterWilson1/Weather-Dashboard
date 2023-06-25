@@ -51,41 +51,39 @@ function start() {
       cast +
       "&units=imperial&appid=" +
       APIKey;
-
+  
     fetch(queryURL)
       .then((Response) => Response.json())
       .then((data) => {
         console.log(data);
-
+  
         // Clear the forecastContainer before appending new forecast cards
         forecastContainer.innerHTML = "";
-
+  
         // Create a parent container with the 'row' class
         var rowContainer = document.createElement("div");
         rowContainer.classList = "row justify-content-center";
-
+  
         for (let i = 0; i < data.list.length; i += 8) {
           console.log(data.list[i]);
-
+  
           var card = document.createElement("div");
           card.classList =
             "col-md-2 forecast bg-primary text-white m-2 rounded d-flex align-items-center justify-content-center p-3";
-
+  
           var cardContent = document.createElement("div");
           cardContent.classList = "card-content text-center";
-
+  
           var h2 = document.createElement("h2");
           var p = document.createElement("p");
           var img = document.createElement("img");
-
+  
           h2.innerText = data.city.name;
-
-          img.src =
-            "http://openweathermap.org/img/w/" +
-            data.list[i].weather[0].icon +
-            ".png";
-
+  
           p.innerText =
+        
+            data.list[i].dt_txt +
+            "\n" +
             "Temp: " +
             data.list[i].main.temp +
             "\n" +
@@ -94,25 +92,31 @@ function start() {
             "\n" +
             "Wind Speed: " +
             data.list[i].wind.speed;
-
+  
+          img.src =
+            "http://openweathermap.org/img/w/" +
+            data.list[i].weather[0].icon +
+            ".png";
+  
           img.classList = "card-icon";
           h2.classList = "card-title";
           p.classList = "card-text";
-
+  
           cardContent.appendChild(h2);
-          cardContent.appendChild(img);
           cardContent.appendChild(p);
-
+          cardContent.appendChild(img);
+  
           card.appendChild(cardContent);
-
+  
           // Append each card to the row container
           rowContainer.appendChild(card);
         }
-
+  
         // Append the row container to the forecast container
         forecastContainer.appendChild(rowContainer);
       });
   }
+  
 
   //event listener for search button
   searchBtn.addEventListener("click", function () {
@@ -156,14 +160,3 @@ function start() {
 }
 
 start();
-/* 
-target value present in input form. current weather takes in values and console.log
-when search button clicked runs currentweather. cw takes in citysrea.value
-inside current vle console.log currentwt.value
-
-$(document).ready(function(){
-  $("button").click(function(){
-    $("p").hide();
-  });
-});
-*/
