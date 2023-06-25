@@ -103,8 +103,9 @@ function start() {
           p.classList = "card-text";
   
           cardContent.appendChild(h2);
-          cardContent.appendChild(p);
           cardContent.appendChild(img);
+          cardContent.appendChild(p);
+
   
           card.appendChild(cardContent);
   
