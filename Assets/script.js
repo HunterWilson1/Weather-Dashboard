@@ -8,7 +8,7 @@ let weatherIcon = document.querySelector("#weatherIcon");
 let forecastContainer = document.querySelector("#forecast-container");
 let history = document.getElementById("history");
 let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
-let clearH = document.getElementById("clear-H")
+let clearH = document.getElementById("clear-H");
 
 function start() {
   const APIKey = "59e0d5247e1028ae9dbf1071b7d55e24";
@@ -19,12 +19,12 @@ function start() {
       city +
       "&units=imperial&appid=" +
       APIKey;
-  
+
     fetch(queryURL)
       .then((Response) => Response.json())
       .then((data) => {
         console.log(data);
-  
+
         var currentContainer = document.getElementById("current-container");
         currentContainer.innerHTML = `
           <div class="col-lg-9">
@@ -44,9 +44,6 @@ function start() {
         `;
       });
   }
-  
-  
-  
 
   function getFiveDayForecast(cast) {
     let queryURL =
@@ -54,40 +51,40 @@ function start() {
       cast +
       "&units=imperial&appid=" +
       APIKey;
-  
+
     fetch(queryURL)
       .then((Response) => Response.json())
       .then((data) => {
         console.log(data);
-  
+
         // Clear the forecastContainer before appending new forecast cards
         forecastContainer.innerHTML = "";
-  
+
         // Create a parent container with the 'row' class
         var rowContainer = document.createElement("div");
         rowContainer.classList = "row justify-content-center";
-  
+
         for (let i = 0; i < data.list.length; i += 8) {
           console.log(data.list[i]);
-  
+
           var card = document.createElement("div");
           card.classList =
-            "col-md-2 forecast bg-primary text-white m-2 rounded d-flex align-items-center justify-content-center";
-  
+            "col-md-2 forecast bg-primary text-white m-2 rounded d-flex align-items-center justify-content-center p-3";
+
           var cardContent = document.createElement("div");
           cardContent.classList = "card-content text-center";
-  
+
           var h2 = document.createElement("h2");
           var p = document.createElement("p");
           var img = document.createElement("img");
-  
+
           h2.innerText = data.city.name;
-  
+
           img.src =
             "http://openweathermap.org/img/w/" +
             data.list[i].weather[0].icon +
             ".png";
-  
+
           p.innerText =
             "Temp: " +
             data.list[i].main.temp +
@@ -97,29 +94,25 @@ function start() {
             "\n" +
             "Wind Speed: " +
             data.list[i].wind.speed;
-  
+
           img.classList = "card-icon";
           h2.classList = "card-title";
           p.classList = "card-text";
-  
+
           cardContent.appendChild(h2);
           cardContent.appendChild(img);
           cardContent.appendChild(p);
-  
+
           card.appendChild(cardContent);
-  
+
           // Append each card to the row container
           rowContainer.appendChild(card);
         }
-  
+
         // Append the row container to the forecast container
         forecastContainer.appendChild(rowContainer);
       });
   }
-  
-  
-  
-  
 
   //event listener for search button
   searchBtn.addEventListener("click", function () {
@@ -131,16 +124,16 @@ function start() {
     searchHistory.push(search);
     localStorage.setItem("search", JSON.stringify(searchHistory));
     //calling the functions
-   // currentWeather(search);
+    // currentWeather(search);
     getFiveDayForecast(search);
     renderSearchHistory();
   });
-  
+
   clearH.addEventListener("click", function () {
     localStorage.clear();
     searchHistory = [];
     renderSearchHistory();
-})
+  });
 
   function renderSearchHistory() {
     history.innerHTML = "";
@@ -160,9 +153,6 @@ function start() {
       history.append(hContent);
     }
   }
-
-  
-
 }
 
 start();
