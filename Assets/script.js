@@ -19,22 +19,34 @@ function start() {
       city +
       "&units=imperial&appid=" +
       APIKey;
-
+  
     fetch(queryURL)
       .then((Response) => Response.json())
       .then((data) => {
         console.log(data);
-
-        cityName.innerText = city;
-        weatherIcon.setAttribute(
-          "src",
-          "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
-        );
-        temp.innerText = "Temp: " + data.main.temp;
-        humidity.innerText = "Humidity: " + data.main.humidity;
-        windSpeed.innerText = "Wind Speed: " + data.wind.speed;
+  
+        var currentContainer = document.getElementById("current-container");
+        currentContainer.innerHTML = `
+          <div class="col-lg-9">
+            <div class="row mr-0 justify-content-end">
+              <div class="col-lg-11 card m-3" id="today-forecast">
+                <div class="card-body">
+                  <h3 id="city" class="city-name align-middle">${city}</h3>
+                  <img id="weatherIcon" src="http://openweathermap.org/img/w/${data.weather[0].icon}.png" />
+                  <p id="weather">${data.weather[0].description}</p>
+                  <p id="temp">Temp: ${data.main.temp}</p>
+                  <p id="humidity">Humidity: ${data.main.humidity}</p>
+                  <p id="wind-spd">Wind Speed: ${data.wind.speed}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
       });
   }
+  
+  
+  
 
   function getFiveDayForecast(cast) {
     let queryURL =
@@ -42,25 +54,40 @@ function start() {
       cast +
       "&units=imperial&appid=" +
       APIKey;
+  
     fetch(queryURL)
       .then((Response) => Response.json())
       .then((data) => {
         console.log(data);
-
+  
+        // Clear the forecastContainer before appending new forecast cards
+        forecastContainer.innerHTML = "";
+  
+        // Create a parent container with the 'row' class
+        var rowContainer = document.createElement("div");
+        rowContainer.classList = "row justify-content-center";
+  
         for (let i = 0; i < data.list.length; i += 8) {
           console.log(data.list[i]);
-
+  
+          var card = document.createElement("div");
+          card.classList =
+            "col-md-2 forecast bg-primary text-white m-2 rounded d-flex align-items-center justify-content-center";
+  
+          var cardContent = document.createElement("div");
+          cardContent.classList = "card-content text-center";
+  
           var h2 = document.createElement("h2");
           var p = document.createElement("p");
           var img = document.createElement("img");
-
-          forecastContainer.classList =
-            "row col-md-2 forecast bg-primary text-white m-2 rounded";
-
+  
           h2.innerText = data.city.name;
-
-          img.src = "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
-
+  
+          img.src =
+            "http://openweathermap.org/img/w/" +
+            data.list[i].weather[0].icon +
+            ".png";
+  
           p.innerText =
             "Temp: " +
             data.list[i].main.temp +
@@ -70,19 +97,29 @@ function start() {
             "\n" +
             "Wind Speed: " +
             data.list[i].wind.speed;
-          
-          img.classList = "card-body text-center";
-          h2.classList = "card-body text-center";
-          p.classList = "card-body text-center";
-
-          forecastContainer.appendChild(h2);
-          forecastContainer.appendChild(img);
-          forecastContainer.appendChild(p);
-       
-       
+  
+          img.classList = "card-icon";
+          h2.classList = "card-title";
+          p.classList = "card-text";
+  
+          cardContent.appendChild(h2);
+          cardContent.appendChild(img);
+          cardContent.appendChild(p);
+  
+          card.appendChild(cardContent);
+  
+          // Append each card to the row container
+          rowContainer.appendChild(card);
         }
+  
+        // Append the row container to the forecast container
+        forecastContainer.appendChild(rowContainer);
       });
   }
+  
+  
+  
+  
 
   //event listener for search button
   searchBtn.addEventListener("click", function () {

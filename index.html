@@ -12,7 +12,7 @@
     <title>Weather Dashboard</title>
   </head>
   <body>
-    <header class="container-fluid text-center text-white bg-dark p-2">
+    <header class="container-fluid text-center text-white p-2" style="background: linear-gradient(to right, #007bff, #00bfff);">
       <h1>Weather Dashboard</h1>
     </header>
 
@@ -29,29 +29,24 @@
             </button>
           </div>
           <button class="btn btn-primary mb-3" type="button" id="clear-H">Clear history</button>
-                <form id="history"></form>
+          <form id="history"></form>
         </div>
         
         <div class="col-lg-9">
-          <div class="row mr-0">
-            <div class="col-lg-11 card m-3" id="today-forecast">
+          <div class="row">
+            <div class="col-lg-11" id="current-container">
               <div class="card-body">
-                <h3 id="city" class="city-name align-middle"></h3>
-                <img id="weatherIcon"/>
-                <p id="weather"></p>
-                <p id="temp"></p>
-                <p id="humidity"></p>
-                <p id="wind-spd"></p>
+                <!-- Content will be dynamically generated in the script.js file -->
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-        <div id="forecast-container">
-        </div>
-      </div>
+    
+    <div id="forecast-container">
     </div>
+    
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
